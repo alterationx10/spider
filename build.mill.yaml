@@ -4,7 +4,7 @@ jvmVersion: temurin:25
 publishVersion: 0.0.15
 artifactName: spider
 pomSettings:
-  description:
+  description: A server-side reactive UI library for Scala 3
   organization: dev.alteration
   url: https://github.com/alterationx10/spider
   licenses: [ Apache 2 ]
