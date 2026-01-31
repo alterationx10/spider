@@ -1,0 +1,31 @@
+extends: [ ScalaModule, SonatypeCentralPublishModule ]
+scalaVersion: 3.8.0
+jvmVersion: temurin:25
+publishVersion: 0.0.15
+artifactName: spider
+pomSettings:
+  description:
+  organization: dev.alteration
+  url: https://github.com/alterationx10/spider
+  licenses: [ Apache 2 ]
+  versionControl: https://github.com/alterationx10/spider
+  developers:
+    - id: alterationx10
+      name: Mark Rudolph
+      email: mark@alteration.dev
+      url: https://github.com/alterationx10
+scalacOptions: [
+  -no-indent,
+  -rewrite,
+  -source:3.4-migration,
+  -Wunused:all,
+  -deprecation,
+  -feature,
+  -Xmax-inlines,
+  64
+]
+mvnDeps:
+  - com.lihaoyi::cask:0.11.3
+  - com.lihaoyi::scalatags:0.13.1
+  - com.lihaoyi::upickle:4.1.0
+  - dev.alteration::keanu:0.0.15
