@@ -1,7 +1,6 @@
 package spider
 
 import keanu.actors.ActorSystem
-import spider.http.ResourceServer
 import upickle.default.*
 
 // Define your WebView state and events
@@ -60,13 +59,10 @@ object ExampleApp extends cask.MainRoutes {
     actorSystem,
     () => new CounterWebView()
   )
-
-  // Serve static resources (webview.js from resources/)
-  @cask.get("/js", subpath = true)
-  def js(request: cask.Request): cask.Response[String] = {
-    val path = request.remainingPathSegments.mkString("/")
-    ResourceServer.serveText("", path)
-  }
+  
+  // Server the /public/js/webview.js
+  @cask.staticResources("/public")
+  def publicResources() = "public"
 
   println("Starting Spider Counter Example on http://localhost:8080/counter")
   initialize()

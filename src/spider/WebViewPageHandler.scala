@@ -40,7 +40,7 @@ object WebViewPageHandler {
   def response(
       wsUrl: String,
       title: String = "Spider WebView",
-      jsPath: String = "/js/webview.js",
+      jsPath: String = "/public/js/webview.js",
       rootId: String = "root",
       debug: Boolean = false
   ): cask.Response[String] = {
@@ -66,7 +66,7 @@ object WebViewPageHandler {
   def generateHtml(
       wsUrl: String,
       title: String = "Spider WebView",
-      jsPath: String = "/js/webview.js",
+      jsPath: String = "/public/js/webview.js",
       rootId: String = "root",
       debug: Boolean = false
   ): String = {
