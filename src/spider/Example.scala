@@ -59,10 +59,9 @@ object ExampleApp extends cask.MainRoutes {
 
   // Serve the counter page
   @cask.get("/counter")
-  def counterPage(): cask.Response[String] = WebViewPageHandler.response(
+  def counterPage(): cask.Response[String] = WebViewHandler.response(
     wsUrl = "ws://localhost:8080/counter",
-    templateStache =
-      WebViewPageHandler.defaultStache + ("title" -> "Counter Demooooo")
+    templateStache = WebViewHandler.defaultStache + ("title" -> "Counter Demo")
   )
 
   // WebSocket endpoint for the counter

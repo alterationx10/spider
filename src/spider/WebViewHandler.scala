@@ -3,8 +3,12 @@ package spider
 import cask.util.Logger.Console.globalLogger
 import castor.Context.Simple.global
 import keanu.actors.ActorSystem
+import mustachio.{Mustachio, Stache}
+import mustachio.Stache.*
 
+import scala.util.*
 import java.util.UUID
+import scala.io.Source
 
 /** Creates a Cask WebSocket handler for WebView connections.
   *
@@ -46,6 +50,45 @@ import java.util.UUID
   *   The event type of the WebView
   */
 object WebViewHandler {
+
+  lazy val defaultTemplate = scala.util.Using(
+    Source.fromResource("templates/site.html.mustache")
+  )(_.mkString)
+
+  val defaultStache = Stache.obj(
+    "jsPath" -> Str("/public/js/webview.js"),
+    "rootId" -> Str("root"),
+    "debug"  -> Str("false")
+  )
+
+  def response(
+      wsUrl: String,
+      siteTemplate: Try[String] = defaultTemplate,
+      templateStache: Obj = defaultStache
+  ): cask.Response[String] = {
+    val renderedTemplate = siteTemplate
+      .map { tmpl =>
+        val stache = Stache.Obj(
+          templateStache.value + ("wsUrl" -> Str(wsUrl))
+        )
+        Mustachio.render(tmpl, stache)
+      }
+
+    renderedTemplate match {
+      case Success(html)      =>
+        cask.Response(
+          html,
+          headers = Seq("Content-Type" -> "text/html; charset=utf-8")
+        )
+      case Failure(exception) =>
+        cask.Response(
+          s"There was an error...\n${exception.getMessage}",
+          headers = Seq("Content-Type" -> "text/html; charset=utf-8"),
+          statusCode = 500
+        )
+    }
+
+  }
 
   /** Create a Cask WebsocketResult for handling WebView connections.
     *
