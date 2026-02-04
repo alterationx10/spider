@@ -2,6 +2,7 @@ package spider
 
 import keanu.actors.ActorSystem
 import mustachio.Stache
+import spider.devtools.{DevToolsEvent, DevToolsWebView}
 import upickle.default.*
 
 // Define your WebView state and events
@@ -44,8 +45,10 @@ class CounterWebView extends WebView[CounterState, CounterEvent] {
 // Define the server
 object ExampleApp extends cask.MainRoutes {
   import CounterEvent.given
+  import DevToolsEvent.given
 
   val actorSystem: ActorSystem = ActorSystem()
+  val devToolsActorName = "devtools"
 
   extension (obj: Stache.Obj) {
     def +(key: String, value: String): Stache.Obj =
@@ -68,7 +71,23 @@ object ExampleApp extends cask.MainRoutes {
   @cask.websocket("/counter")
   def counterWs(): cask.WebsocketResult = WebViewHandler.createWsHandler(
     actorSystem,
-    () => new CounterWebView()
+    () => new CounterWebView(),
+    devToolsActorName = Some(devToolsActorName)
+  )
+
+  // Serve the devtools page
+  @cask.get("/__devtools")
+  def devtoolsPage(): cask.Response[String] = WebViewHandler.response(
+    wsUrl = "ws://localhost:8080/__devtools",
+    templateStache = WebViewHandler.defaultStache + ("title" -> "Spider DevTools")
+  )
+
+  // WebSocket endpoint for devtools
+  @cask.websocket("/__devtools")
+  def devtoolsWs(): cask.WebsocketResult = WebViewHandler.createWsHandler(
+    actorSystem,
+    () => new DevToolsWebView(),
+    useExistingActor = Some(devToolsActorName)
   )
 
   // Server the /public/js/webview.js
