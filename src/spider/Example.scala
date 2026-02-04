@@ -1,6 +1,7 @@
 package spider
 
 import keanu.actors.ActorSystem
+import mustachio.Stache
 import upickle.default.*
 
 // Define your WebView state and events
@@ -46,11 +47,22 @@ object ExampleApp extends cask.MainRoutes {
 
   val actorSystem: ActorSystem = ActorSystem()
 
+  extension (obj: Stache.Obj) {
+    def +(key: String, value: String): Stache.Obj =
+      Stache.Obj(
+        obj.value + (key -> Stache.str(value))
+      )
+
+    def +(kv: (String, String)): Stache.Obj =
+      obj.+(kv._1, kv._2)
+  }
+
   // Serve the counter page
   @cask.get("/counter")
   def counterPage(): cask.Response[String] = WebViewPageHandler.response(
     wsUrl = "ws://localhost:8080/counter",
-    title = "Counter Demo"
+    templateStache =
+      WebViewPageHandler.defaultStache + ("title" -> "Counter Demooooo")
   )
 
   // WebSocket endpoint for the counter
@@ -59,7 +71,7 @@ object ExampleApp extends cask.MainRoutes {
     actorSystem,
     () => new CounterWebView()
   )
-  
+
   // Server the /public/js/webview.js
   @cask.staticResources("/public")
   def publicResources() = "public"

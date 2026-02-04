@@ -29,3 +29,4 @@ mvnDeps:
   - com.lihaoyi::scalatags:0.13.1
   - com.lihaoyi::upickle:4.1.0
   - dev.alteration::keanu:0.0.15
+  - dev.alteration::mustachio:0.0.15

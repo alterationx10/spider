@@ -8,11 +8,11 @@
  * Usage:
  *   <script src="/webview/webview.js"></script>
  *   <script>
- *     const webview = new BranchWebView('ws://localhost:8080/webview');
+ *     const webview = new SpiderWebView('ws://localhost:8080/webview');
  *   </script>
  */
 
-class BranchWebView {
+class SpiderWebView {
   constructor(url, options = {}) {
     this.url = url;
     this.options = {
@@ -300,7 +300,7 @@ class BranchWebView {
    */
   log(...args) {
     if (this.options.debug) {
-      console.log('[BranchWebView]', ...args);
+      console.log('[SpiderWebView]', ...args);
     }
   }
 
@@ -317,8 +317,8 @@ class BranchWebView {
 
 // Export for both browser and module environments
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = BranchWebView;
+  module.exports = SpiderWebView;
 }
 if (typeof window !== 'undefined') {
-  window.BranchWebView = BranchWebView;
+  window.SpiderWebView = SpiderWebView;
 }
