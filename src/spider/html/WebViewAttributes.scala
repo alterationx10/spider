@@ -219,7 +219,7 @@ object WebViewAttributes {
     * }}}
     */
   def wvClickTarget(event: String, target: String): Seq[AttrPair] = Seq(
-    wvClick := event,
+    wvClick  := event,
     wvTarget := target
   )
 
@@ -241,7 +241,7 @@ object WebViewAttributes {
     * }}}
     */
   def wvDebounceInput(event: String, delay: Int): Seq[AttrPair] = Seq(
-    wvInput := event,
+    wvInput    := event,
     wvDebounce := delay.toString
   )
 
@@ -252,19 +252,23 @@ object WebViewAttributes {
     * }}}
     */
   def wvThrottleClick(event: String, throttle: Int): Seq[AttrPair] = Seq(
-    wvClick := event,
+    wvClick    := event,
     wvThrottle := throttle.toString
   )
 
   // === Implicit Conversions ===
 
-  /** Allow any Product (case class/object) to be used as an event attribute value.
-    * Extracts the type name to use as the event name.
+  /** Allow any Product (case class/object) to be used as an event attribute
+    * value. Extracts the type name to use as the event name.
     */
   given productAttrValue[T <: Product]: AttrValue[scalatags.text.Builder, T] = {
-    (t: scalatags.text.Builder, attr: Attr, value: T) => {
-      val eventName = value.productPrefix
-      t.setAttr(attr.name, scalatags.text.Builder.GenericAttrValueSource(eventName))
-    }
+    (t: scalatags.text.Builder, attr: Attr, value: T) =>
+      {
+        val eventName = value.productPrefix
+        t.setAttr(
+          attr.name,
+          scalatags.text.Builder.GenericAttrValueSource(eventName)
+        )
+      }
   }
 }

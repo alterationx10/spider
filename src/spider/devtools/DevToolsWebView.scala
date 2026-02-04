@@ -53,7 +53,7 @@ object TimelineFilter {
               case "info"   => TimelineFilter.OnlyInfo
               case _        => throw new RuntimeException(s"Unknown filter: $s")
             }
-          case _ => throw new RuntimeException(s"Expected string, got: $json")
+          case _            => throw new RuntimeException(s"Expected string, got: $json")
         }
       },
     decodeClientFunc = (eventName, _) =>
@@ -194,7 +194,7 @@ class DevToolsWebView extends WebView[DevToolsUIState, DevToolsEvent] {
           devToolsStates = state.devToolsStates + (viewId -> devToolsState),
           selectedView = state.selectedView.orElse(Some(viewId))
         )
-      case _ => state
+      case _                                          => state
     }
   }
 
@@ -222,9 +222,9 @@ class DevToolsWebView extends WebView[DevToolsUIState, DevToolsEvent] {
             state.devToolsStates.get(viewId) match {
               case Some(devToolsState) =>
                 renderMainPanel(viewId, devToolsState, state.filter)
-              case None => renderEmptyState("WebView not found")
+              case None                => renderEmptyState("WebView not found")
             }
-          case None =>
+          case None         =>
             renderEmptyState("Select a WebView from the sidebar")
         }
       )
@@ -388,7 +388,7 @@ class DevToolsWebView extends WebView[DevToolsUIState, DevToolsEvent] {
       case TimelineFilter.OnlyEvents       => entries.filter(_.eventType == "Event")
       case TimelineFilter.OnlyStateChanges =>
         entries.filter(_.eventType == "Mount")
-      case TimelineFilter.OnlyInfo => entries.filter(_.eventType == "Info")
+      case TimelineFilter.OnlyInfo         => entries.filter(_.eventType == "Info")
     }
 
     if (filteredEntries.isEmpty) {
@@ -443,11 +443,11 @@ class DevToolsWebView extends WebView[DevToolsUIState, DevToolsEvent] {
   }
 
   // Styles
-  private val devToolsStyle =
+  private val devToolsStyle  =
     "font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #edf2f7; height: 100vh; margin: 0; padding: 0;"
-  private val headerStyle =
+  private val headerStyle    =
     "background: white; padding: 20px; border-bottom: 2px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"
-  private val sidebarStyle =
+  private val sidebarStyle   =
     "width: 300px; background: white; border-right: 2px solid #e2e8f0; padding: 20px; overflow-y: auto;"
   private val mainPanelStyle = "flex: 1; padding: 20px; overflow-y: auto;"
 

@@ -115,8 +115,9 @@ object WebViewProtocol {
           // Handle both string and JSON object events
           val event = eventJson match {
             case ujson.Str(str)  => str
-            case jobj: ujson.Obj => ujson.write(jobj) // Pre-encoded event as object
-            case j: Value        => ujson.write(j)    // Any other JSON type
+            case jobj: ujson.Obj =>
+              ujson.write(jobj) // Pre-encoded event as object
+            case j: Value        => ujson.write(j) // Any other JSON type
           }
           Event(event, target, value)
         }

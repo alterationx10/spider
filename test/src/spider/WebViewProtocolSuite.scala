@@ -121,7 +121,10 @@ class WebViewProtocolSuite extends FunSuite {
     val json = msg.toJson
 
     assertEquals(json.obj.get("type").flatMap(_.strOpt), Some("replace"))
-    assertEquals(json.obj.get("html").flatMap(_.strOpt), Some("<div>Content</div>"))
+    assertEquals(
+      json.obj.get("html").flatMap(_.strOpt),
+      Some("<div>Content</div>")
+    )
     assertEquals(json.obj.get("target").flatMap(_.strOpt), Some("root"))
   }
 
@@ -130,7 +133,10 @@ class WebViewProtocolSuite extends FunSuite {
     val json = msg.toJson
 
     assertEquals(json.obj.get("type").flatMap(_.strOpt), Some("replace"))
-    assertEquals(json.obj.get("html").flatMap(_.strOpt), Some("<span>Text</span>"))
+    assertEquals(
+      json.obj.get("html").flatMap(_.strOpt),
+      Some("<span>Text</span>")
+    )
     assertEquals(json.obj.get("target").flatMap(_.strOpt), Some("sidebar"))
   }
 
@@ -154,7 +160,10 @@ class WebViewProtocolSuite extends FunSuite {
     val json = msg.toJson
 
     assertEquals(json.obj.get("type").flatMap(_.strOpt), Some("error"))
-    assertEquals(json.obj.get("message").flatMap(_.strOpt), Some("Something went wrong"))
+    assertEquals(
+      json.obj.get("message").flatMap(_.strOpt),
+      Some("Something went wrong")
+    )
   }
 
   test("ReplaceHtml with HTML special characters") {

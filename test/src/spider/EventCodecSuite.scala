@@ -59,11 +59,11 @@ class EventCodecSuite extends FunSuite {
 
     // uPickle encodes case objects as just their name string
     json match {
-      case ujson.Str(s)  => assertEquals(s, "Increment")
+      case ujson.Str(s)   => assertEquals(s, "Increment")
       case ujson.Obj(obj) =>
         val typeField = obj.get("$type").flatMap(_.strOpt)
         assertEquals(typeField, Some("Increment"))
-      case _ => fail(s"Unexpected JSON format: $json")
+      case _              => fail(s"Unexpected JSON format: $json")
     }
   }
 
@@ -245,7 +245,7 @@ class EventCodecSuite extends FunSuite {
       case ujson.Obj(obj) =>
         val typeField = obj.get("$type").flatMap(_.strOpt)
         assertEquals(typeField, Some("Increment"))
-      case _ => fail(s"Unexpected JSON format: $json")
+      case _              => fail(s"Unexpected JSON format: $json")
     }
   }
 

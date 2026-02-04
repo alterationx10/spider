@@ -89,7 +89,7 @@ case class WebViewActor[State, Event](webView: WebView[State, Event])
           case Failure(error) =>
             println(s"Error in afterMount: ${error.getMessage}")
           // Continue with mount even if afterMount fails
-          case Success(_) => ()
+          case Success(_)     => ()
         }
 
         // Render with beforeRender hook

@@ -50,16 +50,17 @@ trait WebViewSuite extends FunSuite {
     view.render(transformedState)
   }
 
-  /** Mount a WebView, send events, and render - returns final state and HTML. */
+  /** Mount a WebView, send events, and render - returns final state and HTML.
+    */
   def mountAndRender[State, Event](
       view: WebView[State, Event],
       events: Seq[Event] = Seq.empty,
       params: Map[String, String] = Map.empty,
       session: Session = Session()
   ): (State, String) = {
-    val state       = mount(view, params, session)
-    val finalState  = sendEvents(view, state, events)
-    val html        = render(view, finalState)
+    val state      = mount(view, params, session)
+    val finalState = sendEvents(view, state, events)
+    val html       = render(view, finalState)
     (finalState, html)
   }
 }

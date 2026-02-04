@@ -91,7 +91,8 @@ class WebViewAttributesSuite extends FunSuite {
   }
 
   test("wvClickTarget helper creates click and target attributes") {
-    val html = button(wvClickTarget("delete-item", "item-123")*)("Delete").render
+    val html =
+      button(wvClickTarget("delete-item", "item-123")*)("Delete").render
 
     assert(html.contains("""wv-click="delete-item""""))
     assert(html.contains("""wv-target="item-123""""))
@@ -152,9 +153,9 @@ class WebViewAttributesSuite extends FunSuite {
 
   test("Button with target value pattern") {
     val html = button(
-      wvClick := "delete-todo",
+      wvClick  := "delete-todo",
       wvTarget := "todo-42",
-      cls     := "btn-danger"
+      cls      := "btn-danger"
     )("Delete").render
 
     assert(html.contains("""wv-click="delete-todo""""))
